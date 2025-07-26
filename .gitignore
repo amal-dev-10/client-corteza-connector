@@ -1,0 +1,28 @@
+# Node modules
+node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# dotenv environment variables
+.env
+
+# Build output
+dist/
+build/
+
+# VSCode settings
+.vscode/
+
+# Coverage reports
+coverage/
+
+# Optional: ignore local database or secrets
+*.sqlite
+*.pem
