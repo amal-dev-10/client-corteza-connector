@@ -73,6 +73,36 @@ app.post("/api/gallery", async(req, res)=>{
   const attachments = await Promise.all(allPromises);
 
   res.json(attachments);
+});
+
+app.post("/api/enquiry", async (req, res)=>{
+  const authHeader = req.headers.authorization || '';
+  const token = authHeader.startsWith("Bearer ") ? authHeader.slice(7) : null;
+
+  if (!token) {
+    return res.status(401).json({ error: "Unauthorized: Token missing" });
+  }
+
+  // Get namespaceID and moduleID from the request body
+  const { namespaceID, moduleID, enquiry } = req.body;
+
+  if (!namespaceID || !moduleID) {
+    return res.status(400).json({ error: "Bad Request: namespaceID and moduleID are required" });
+  }
+
+  let response = await fetch(`http://188.241.62.49:18080/api/compose/namespace/${namespaceID}/module/${moduleID}/record/`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(enquiry)
+  });
+
+  const data = await response.json();
+
+  res.json(data);
 })
 
 app.listen(3000, () => console.log("Proxy server running on port 3000"));
