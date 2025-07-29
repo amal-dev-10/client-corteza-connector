@@ -13,7 +13,7 @@ app.get("/api/token", async (req, res) => {
   formdata.append("grant_type", "client_credentials");
   formdata.append("scope", "api profile");
 
-  const tokenRes = await fetch("http://188.241.62.49:18080/auth/oauth2/token", {
+  const tokenRes = await fetch("https://corteza.duvitra.com/auth/oauth2/token", {
     method: "POST",
     headers: {
       Authorization: "Basic NDUzMTk2OTgwMzg4MTY3NjgxOlZuTmQ5NHVMZUQzRVFnTzBVQ21pejlWbUpaQUJ1RVhQTjRoV2MxbElQTUlMcTNKOUxKSHg3YzgxYXI5N3hkTVE=",
@@ -40,7 +40,7 @@ app.post("/api/gallery", async(req, res)=>{
     return res.status(400).json({ error: "Bad Request: namespaceID and moduleID are required" });
   }
 
-  let response = await fetch(`http://188.241.62.49:18080/api/compose/namespace/${namespaceID}/module/${moduleID}/record/`, {
+  let response = await fetch(`https://corteza.duvitra.com/api/compose/namespace/${namespaceID}/module/${moduleID}/record/`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -55,7 +55,7 @@ app.post("/api/gallery", async(req, res)=>{
   const allPromises = allValues.map(x=> {
     const attachmentID = x.find(y => y.name === 'Image');
     if(attachmentID){
-      return fetch(`http://188.241.62.49:18080/api/compose/namespace/${namespaceID}/attachment/record/${attachmentID.value}`, {
+      return fetch(`https://corteza.duvitra.com/api/compose/namespace/${namespaceID}/attachment/record/${attachmentID.value}`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -90,7 +90,7 @@ app.post("/api/enquiry", async (req, res)=>{
     return res.status(400).json({ error: "Bad Request: namespaceID and moduleID are required" });
   }
 
-  let response = await fetch(`http://188.241.62.49:18080/api/compose/namespace/${namespaceID}/module/${moduleID}/record/`, {
+  let response = await fetch(`https://corteza.duvitra.com/api/compose/namespace/${namespaceID}/module/${moduleID}/record/`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
